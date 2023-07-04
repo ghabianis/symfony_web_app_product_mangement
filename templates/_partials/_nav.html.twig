@@ -1,40 +1,20 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-	<div class="container-fluid">
-		<a class="navbar-brand" href="{{ path('main') }}">e-commerce</a>
-		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ path('main') }}">e-commerce</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{ path('main') }}">Accueil</a>
+                </li>
 				<li class="nav-item">
-					<a class="nav-link active" aria-current="page" href="{{ path('main') }}">Accueil</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">Link</a>
-				</li>
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-						Dropdown
-					</a>
-					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<li>
-							<a class="dropdown-item" href="#">Action</a>
-						</li>
-						<li>
-							<a class="dropdown-item" href="#">Another action</a>
-						</li>
-						<li><hr class="dropdown-divider"></li>
-						<li>
-							<a class="dropdown-item" href="#">Something else here</a>
-						</li>
-					</ul>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link disabled">Disabled</a>
-				</li>
-			</ul>
-			<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-				{% if app.user %}
+    <a class="nav-link active" aria-current="page" href="{{ path('products_index') }}">Products</a>
+</li>
+            </ul>
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                {% if app.user %}
                     {% if is_granted('ROLE_PRODUCT_ADMIN') %}
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('admin_index') }}">Administration</a>
@@ -53,8 +33,59 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_login') }}">Me Connecter</a>
                     </li>
-				{% endif %}
-			</ul>
-		</div>
-	</div>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
 </nav>
+
+<style>
+    .navbar {
+        padding: 1rem;
+        background-color: #f8f9fa;
+    }
+
+    .navbar-brand {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .navbar-toggler-icon {
+        background-image: url('data:image/svg+xml,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"%3e%3cpath fill-rule="evenodd" d="M1 2.75a.75.75 0 0 1 .75-.75h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 2.75zm0 5a.75.75 0 0 1 .75-.75h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 7.75zm0 5a.75.75 0 0 1 .75-.75h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 12.75z"%3e%3c/path%3e%3c/svg%3e');
+        width: 1.5em;
+        height: 1.5em;
+    }
+
+    .navbar-toggler {
+        border: none;
+        outline: none;
+    }
+
+    .nav-link {
+        color: #333;
+    }
+
+    .nav-link:hover {
+        color: #007bff;
+    }
+
+    .dropdown-toggle::after {
+        display: none;
+    }
+
+    .dropdown-menu {
+        background-color: #f8f9fa;
+        border: none;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+
+    .dropdown-item {
+        color: #333;
+    }
+
+    .dropdown-item:hover {
+        color: #007bff;
+        background-color: #e9ecef;
+    }
+</style>

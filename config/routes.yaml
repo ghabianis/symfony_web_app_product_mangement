@@ -5,3 +5,17 @@ controllers:
 kernel:
     resource: ../src/Kernel.php
     type: annotation
+
+products_index:
+    path: /products
+    controller: App\Controller\ProductsController::index
+
+product_edit:
+    path: "/product/edit"
+    controller: App\Controller\ProductController::edit
+    methods: ["GET"]
+
+product_delete:
+    path: "/product/delete"
+    controller: App\Controller\ProductController::delete
+    methods: ["DELETE"]

@@ -4,17 +4,33 @@
 
 {% block body %}
 <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .profile-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .profile-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .profile-image { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; }
 </style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<div class="profile-wrapper">
+    <h1>Hello Ghabi Anis! ✅</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/benoit/Documents/Demos/ecommerce-sf6/src/Controller/ProfileController.php'|file_link(0) }}">src/Controller/ProfileController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/benoit/Documents/Demos/ecommerce-sf6/templates/profile/index.html.twig'|file_link(0) }}">templates/profile/index.html.twig</a></code></li>
-    </ul>
+    <div class="row">
+        <div class="col-md-4">
+            <img src="https://lh3.googleusercontent.com/a/AAcHTte8U-xCNr4HtCU0IeuJCNBtdzhzkm5pOC_2eB-9V8gPEyU=s360-c-no" class="profile-image" alt="Profile Image">
+        </div>
+        <div class="col-md-8">
+            <h2>Profile Details</h2>
+            <p><strong>Name:</strong>Ghabi Anis</p>
+            <p><strong>Email:</strong>anis.ghabi@tekab.dev</p>
+            <p><strong>Location:</strong> Sfax</p>
+            <p><strong>Phone:</strong> +21690770350</p>
+        </div>
+    </div>
+    
+    <p>
+        This friendly message is coming from:
+        <ul>
+            <li>Your controller at <code><a href="{{ '/home/benoit/Documents/Demos/ecommerce-sf6/src/Controller/ProfileController.php'|file_link(0) }}">src/Controller/ProfileController.php</a></code></li>
+            <li>Your template at <code><a href="{{ '/home/benoit/Documents/Demos/ecommerce-sf6/templates/profile/index.html.twig'|file_link(0) }}">templates/profile/index.html.twig</a></code></li>
+        </ul>
+    </p>
 </div>
 {% endblock %}
