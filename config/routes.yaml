@@ -11,11 +11,20 @@ products_index:
     controller: App\Controller\ProductsController::index
 
 product_edit:
-    path: "/product/edit"
-    controller: App\Controller\ProductController::edit
-    methods: ["GET"]
+    path: "/product/edit/{id}"
+    controller: App\Controller\ProductsController::edit
+    methods: ["POST"]
+
+product_list:
+    path: /products
+    controller: App\Controller\ProductsController::list
+    methods: GET
 
 product_delete:
-    path: "/product/delete"
-    controller: App\Controller\ProductController::delete
-    methods: ["DELETE"]
+    path: "/product/delete/{id}"
+    controller: App\Controller\ProductsController::delete
+    methods: DELETE
+
+profile:
+    path: /profile
+    controller: App\Controller\ProfileController::index

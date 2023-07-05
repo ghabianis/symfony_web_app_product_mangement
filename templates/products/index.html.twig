@@ -1,58 +1,152 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/css/bootstrap.min.css">
+    {{ parent() }}
+    <style>
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            width: 25%;
+            float: right;
+            margin-right: 10px;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
+    {% set searchedProduct = null %}
+    {% set searchQuery = app.request.query.get('search') %}
+
+    {% if searchQuery %}
+        {% set found = false %}
+        {% for product in products %}
+            {% if product.name == searchQuery %}
+                {% set searchedProduct = product %}
+                {% set found = true %}
+            {% endif %}
+        {% endfor %}
+
+        {% if not found %}
+            <div class="alert alert-danger" role="alert">
+                The product "{{ searchQuery }}" does not exist.
+            </div>
+        {% endif %}
+    {% endif %}
+
     <h1>Product Listing</h1>
 
-    {% if products is defined and products|length > 0 %}
+    <!-- Search Input -->
+    <form method="get" action="{{ path('product_list') }}" class="mb-3">
+        <div class="search-container">
+            <input type="text" class="form-control search-input" id="searchInput" name="search" placeholder="Search by Product Name">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+
+    {% if searchedProduct %}
         <div class="row">
-            {% for product in products %}
-                <div class="col-md-4">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ product.name }}</h5>
-                            <p class="card-text">{{ product.description }}</p>
-                            <p class="card-text">Price: ${{ product.price }}</p>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal{{ product.id }}">Edit</button>
-                            <a href="{{ path('product_delete', { 'id': product.id }) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this product?')">Delete</a>
+            <div class="col-md-4 product-card">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ searchedProduct.name }}</h5>
+                        <p class="card-text">{{ searchedProduct.description }}</p>
+                        <p class="card-text">Price: ${{ searchedProduct.price }}</p>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal{{ searchedProduct.id }}">Edit</button>
+                        <a href="{{ path('product_delete', { 'id': searchedProduct.id }) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this product?')">Delete</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit Modal -->
+            <div class="modal fade" id="editModal{{ searchedProduct.id }}" tabindex="-1" aria-labelledby="editModalLabel{{ searchedProduct.id }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editModalLabel{{ searchedProduct.id }}">Edit Product</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Edit Form -->
+                            <form method="post" action="{{ path('product_edit', { 'id': searchedProduct.id }) }}">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Product Name</label>
+                                    <input type="text" class="form-control" id="name" name="name" value="{{ searchedProduct.name }}">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">Description</label>
+                                    <textarea class="form-control" id="description" name="description">{{ searchedProduct.description }}</textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="price" class="form-label">Price</label>
+                                    <input type="number" class="form-control" id="price" name="price" value="{{ searchedProduct.price }}">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </form>
                         </div>
                     </div>
                 </div>
-
-                {% if loop.index % 3 == 0 %}
-                    </div><div class="row">
-                {% endif %}
-
-                   <div class="modal-body">
-        <!-- Edit Form -->
-        <form method="post" action="{{ path('product_edit', { 'id': product.id }) }}">
-            {{ form_start(form) }}
-            <div class="mb-3">
-                <label for="{{ form.name.vars.id }}" class="form-label">Product Name</label>
-                {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
             </div>
-            <div class="mb-3">
-                <label for="{{ form.description.vars.id }}" class="form-label">Description</label>
-                {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
-            </div>
-            <div class="mb-3">
-                <label for="{{ form.price.vars.id }}" class="form-label">Price</label>
-                {{ form_widget(form.price, {'attr': {'class': 'form-control'}}) }}
-            </div>
-            <button type="submit" class="btn btn-primary">Save Changes</button>
-            {{ form_end(form) }}
-        </form>
-    </div>
-            {% endfor %}
         </div>
     {% else %}
-        <p>No products found.</p>
+        {% if products is defined and products|length > 0 %}
+            <div class="row">
+                {% for product in products %}
+                    <div class="col-md-4 product-card">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ product.name }}</h5>
+                                <p class="card-text">{{ product.description }}</p>
+                                <p class="card-text">Price: ${{ product.price }}</p>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal{{ product.id }}">Edit</button>
+                                <a href="{{ path('product_delete', { 'id': product.id }) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this product?')">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if loop.index % 3 == 0 %}
+                        </div><div class="row">
+                    {% endif %}
+
+                    <!-- Edit Modal -->
+                    <div class="modal fade" id="editModal{{ product.id }}" tabindex="-1" aria-labelledby="editModalLabel{{ product.id }}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editModalLabel{{ product.id }}">Edit Product</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Edit Form -->
+                                    <form method="post" action="{{ path('product_edit', { 'id': product.id }) }}">
+                                        <div class="mb-3">
+                                            <label for="name" class="form-label">Product Name</label>
+                                            <input type="text" class="form-control" id="name" name="name" value="{{ product.name }}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="description" class="form-label">Description</label>
+                                            <textarea class="form-control" id="description" name="description">{{ product.description }}</textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="price" class="form-label">Price</label>
+                                            <input type="number" class="form-control" id="price" name="price" value="{{ product.price }}">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No products found.</p>
+        {% endif %}
     {% endif %}
 
     {% block javascripts %}
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/js/bootstrap.bundle.min.js"></script>
+        {{ parent() }}
     {% endblock %}
 {% endblock %}
