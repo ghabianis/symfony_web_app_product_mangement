@@ -4,8 +4,8 @@
 
 {% block body %}
 <section class="container my-3">
-    <div class="row">
-        <div class="col">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
             <form method="post">
                 {% if error %}
                     <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -38,16 +38,15 @@
                     </div>
                 #}
 
-                <button class="btn btn-lg btn-primary mt-3" type="submit">
-                    Me connecter
-                </button>
-                <a href="{{ path('app_register') }}" class="btn btn-secondary mt-3">M'inscrire</a>
-                <a href="{{ path('forgotten_password') }}" class="btn btn-secondary mt-3">Mot de passe oublié</a>
-
+                <div class="d-grid gap-2 mt-3">
+                    <button class="btn btn-lg btn-primary" type="submit">
+                        Me connecter
+                    </button>
+                    <a href="{{ path('app_register') }}" class="btn btn-secondary">M'inscrire</a>
+                    <a href="{{ path('forgotten_password') }}" class="btn btn-secondary">Mot de passe oublié</a>
+                </div>
             </form>
-        
         </div>
     </div>
 </section>
-
 {% endblock %}

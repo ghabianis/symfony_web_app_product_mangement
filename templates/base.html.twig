@@ -1,35 +1,65 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>{% block title %}Accueil{% endblock %} - Site e-commerce Symfony 6</title>
-		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Accueil{% endblock %} - Site E-commerce Symfony 6</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<!-- Feuilles de styles -->
-		<link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+        <!-- Feuilles de styles -->
+        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
         {% block stylesheets %}{% endblock %}
-		<link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
 
-		<!-- Fichiers JS -->
-		<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}" defer></script>
-		{% block javascripts %}{% endblock %}
-		<script src="{{ asset('assets/js/scripts.js') }}" defer></script>
-	</head>
-	<body>
+        <!-- Fichiers JS -->
+        <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}" defer></script>
+        {% block javascripts %}{% endblock %}
+        <script src="{{ asset('assets/js/scripts.js') }}" defer></script>
+
+        <style>
+            html, body {
+                height: 100%;
+            }
+
+            body {
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+                margin: 0;
+            }
+
+            .content {
+                flex: 1;
+            }
+
+            .footer {
+                padding: 20px;
+                background-color: rgba(248, 249, 250, 0.8); /* Adjust the alpha value to control the transparency */
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
         {% include "_partials/_nav.html.twig" %}
-        
-		{% if app.user and app.user.isVerified == false %}
-			<div class="alert alert-warning alert-dismissible" role="alert">
-				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-				<div class="alert-message">
-					<strong>Votre compte n'est pas activé</strong>, <a href="{{ path('resend_verif') }}">renvoyer le lien d'activation</a>
-				</div>
-			</div>
-		{% endif %}
 
-		
-		{% block body %}{% endblock %}
+        {% if app.user and app.user.isVerified == false %}
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <div class="alert-message">
+                    <strong>Votre compte n'est pas activé</strong>, <a href="{{ path('resend_verif') }}">renvoyer le lien d'activation</a>
+                </div>
+            </div>
+        {% endif %}
 
-	</body>
+
+        <div class="content">
+            {% block body %}{% endblock %}
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <p>&copy; {{ "now"|date("Y") }} Ghabi Anis. All rights reserved.</p>
+            </div>
+        </footer>
+    </body>
 </html>

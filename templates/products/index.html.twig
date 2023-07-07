@@ -102,6 +102,8 @@
                                 <p class="card-text">Price: ${{ product.price }}</p>
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal{{ product.id }}">Edit</button>
                                 <a href="{{ path('product_delete', { 'id': product.id }) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this product?')">Delete</a>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detailsModal{{ product.id }}">Details</button>
+
                             </div>
                         </div>
                     </div>
@@ -110,6 +112,22 @@
                         </div><div class="row">
                     {% endif %}
 
+<!-- Details Modal -->
+<div class="modal fade" id="detailsModal{{ product.id }}" tabindex="-1" aria-labelledby="detailsModalLabel{{ product.id }}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailsModalLabel{{ product.id }}">Product Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h5>{{ product.name }}</h5>
+                <p>{{ product.description }}</p>
+                <p>Price: ${{ product.price }}</p>
+            </div>
+        </div>
+    </div>
+</div>
                     <!-- Edit Modal -->
                     <div class="modal fade" id="editModal{{ product.id }}" tabindex="-1" aria-labelledby="editModalLabel{{ product.id }}" aria-hidden="true">
                         <div class="modal-dialog">

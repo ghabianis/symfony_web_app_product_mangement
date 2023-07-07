@@ -4,31 +4,34 @@
 
 {% block body %}
     <section class="container">
-        <div class="row">
-            <div class="col">
-                <h1>Inscription</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h1 class="text-center">Inscription</h1>
 
                 {{ form_start(registrationForm) }}
                     <fieldset class="mb-3">
-                        <legend>Mon identité</legend>
-                        {{ form_row(registrationForm.lastname) }}
-                        {{ form_row(registrationForm.firstname) }}
-                        {{ form_row(registrationForm.email) }}
+                        <legend class="text-center">Mon identité</legend>
+                        {{ form_row(registrationForm.lastname, {'attr': {'class': 'form-control', 'style': 'width: 100%'}}) }}
+                        {{ form_row(registrationForm.firstname, {'attr': {'class': 'form-control', 'style': 'width: 100%'}}) }}
+                        {{ form_row(registrationForm.email, {'attr': {'class': 'form-control', 'style': 'width: 100%'}}) }}
                     </fieldset>
 
                     <fieldset class="mb-3">
-                        <legend>Mes coordonnées</legend>
-                        {{ form_row(registrationForm.address) }}
-                        {{ form_row(registrationForm.zipcode) }}
-                        {{ form_row(registrationForm.city) }}
+                        <legend class="text-center">Mes coordonnées</legend>
+                        {{ form_row(registrationForm.address, {'attr': {'class': 'form-control', 'style': 'width: 100%'}}) }}
+                        {{ form_row(registrationForm.zipcode, {'attr': {'class': 'form-control', 'style': 'width: 100%'}}) }}
+                        {{ form_row(registrationForm.city, {'attr': {'class': 'form-control', 'style': 'width: 100%'}}) }}
                     </fieldset>
                     {{ form_row(registrationForm.plainPassword, {
-                        label: 'Password'
+                        label: 'Password',
+                        'attr': {'class': 'form-control', 'style': 'width: 100%'}
                     }) }}
                     {{ form_row(registrationForm.RGPDConsent) }}
 
-                    <button type="submit" class="btn btn-primary btn-lg my-3">M'inscrire</button>
-                    <a href="{{ path('app_login') }}" class="btn btn-secondary">Me connecter</a>
+                    <div class="d-grid gap-2 mt-3">
+                        <button type="submit" class="btn btn-primary btn-lg">M'inscrire</button>
+                        <a href="{{ path('app_login') }}" class="btn btn-secondary">Me connecter</a>
+                    </div>
                 {{ form_end(registrationForm) }}            
             </div>
         </div>
